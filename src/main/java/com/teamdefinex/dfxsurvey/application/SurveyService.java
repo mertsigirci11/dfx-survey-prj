@@ -1,5 +1,6 @@
 package com.teamdefinex.dfxsurvey.application;
 
+import com.teamdefinex.dfxsurvey.domain.survey.Survey;
 import com.teamdefinex.dfxsurvey.dto.CreateSurveyRequestDTO;
 import com.teamdefinex.dfxsurvey.dto.EditSurveyRequestDTO;
 import com.teamdefinex.dfxsurvey.dto.SurveyDetailResponseDTO;

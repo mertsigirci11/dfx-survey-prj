@@ -21,4 +21,16 @@ public class Questions extends BaseEntity {
     private LocalDateTime expiresAt;
     private String question;
     private Integer questionOrder;
+
+    public Questions duplicate() {
+        Questions copy = new Questions();
+
+        copy.setSurvey(this.survey);
+        copy.setType(this.type);
+        copy.setExpiresAt(this.expiresAt);
+        copy.setQuestion(this.question);
+        copy.setQuestionOrder(this.questionOrder);
+
+        return copy;
+    }
 }

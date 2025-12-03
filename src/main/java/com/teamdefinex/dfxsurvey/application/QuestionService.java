@@ -2,6 +2,7 @@ package com.teamdefinex.dfxsurvey.application;
 
 import com.teamdefinex.dfxsurvey.dto.*;
 import com.teamdefinex.dfxsurvey.dto.result.Result;
+import org.springframework.security.core.Authentication;
 
 import java.util.UUID;
 public interface QuestionService {
@@ -10,5 +11,5 @@ public interface QuestionService {
     Result<Void> editQuestion(UUID questionId, EditQuestionRequestDTO request);
     Result<Void> deleteQuestion(UUID questionId);
     Result<QuestionSummaryResponseDTO> duplicateQuestion(UUID id);
-    Result<QuestionSummaryResponseDTO> addQuestion(UUID id, EditQuestionRequestDTO request);
+    Result<QuestionSummaryResponseDTO> addQuestion(UUID id, EditQuestionRequestDTO request, Authentication authentication);
 }

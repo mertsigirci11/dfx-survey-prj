@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "survey")
@@ -33,6 +34,7 @@ public class Survey extends BaseEntity {
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
+    @Column(name = "participants")
     private String participants;
 
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
@@ -41,9 +43,10 @@ public class Survey extends BaseEntity {
     @Transient
     public List<String> getParticipants() {
         if (this.participants == null || this.participants.isEmpty()) {
-            return List.of();
+            return new ArrayList<>();
         }
-        return Arrays.asList(this.participants.split(","));
+        return Arrays.stream(this.participants.split(","))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Transient
@@ -53,5 +56,28 @@ public class Survey extends BaseEntity {
         } else {
             this.participants = String.join(",", participantsList);
         }
+    }
+
+    public Survey duplicate() {
+        Survey copy = new Survey();
+
+        // Copy basic fields
+        copy.setOwnerId(this.ownerId);
+        copy.setStatus(this.status);
+        copy.setExpiresAt(this.expiresAt);
+        copy.setTitle(this.title);
+        copy.setParticipants(this.getParticipants());
+
+        if (this.questions != null && !this.questions.isEmpty()) {
+            List<Questions> copiedQuestions = new ArrayList<>();
+            for (Questions question : this.questions) {
+                Questions copiedQuestion = question.duplicate();
+                copiedQuestion.setSurvey(copy);
+                copiedQuestions.add(copiedQuestion);
+            }
+            copy.setQuestions(copiedQuestions);
+        }
+
+        return copy;
     }
 }

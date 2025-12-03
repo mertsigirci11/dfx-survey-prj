@@ -7,6 +7,7 @@ import com.teamdefinex.dfxsurvey.dto.result.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,5 +19,10 @@ public class AuthController {
     @PostMapping("/login")
     public Result<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
         return authService.login(request.getEmail(), request.getPassword());
+    }
+
+    @PostMapping("/refresh")
+    Result<LoginResponseDTO> refresh(@RequestParam("token") String refreshToken) {
+        return authService.refresh(refreshToken);
     }
 }

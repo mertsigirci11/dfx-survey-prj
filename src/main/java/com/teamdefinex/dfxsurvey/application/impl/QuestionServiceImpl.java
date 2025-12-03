@@ -19,6 +19,7 @@ import java.util.UUID;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,7 +32,6 @@ import java.util.UUID;
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final AnswerRepository answerRepository;
     private final SurveyRepository surveyRepository;
 
     public Result<QuestionSummaryResponseDTO> getQuestionSummary(UUID id) {
@@ -59,16 +59,13 @@ public class QuestionServiceImpl implements QuestionService {
             return Result.failure("Question not found");
         }
 
-        Optional<Answer> answerOptional = answerRepository.findByQuestionId(id);
         Questions question = questionOptional.get();
-        Answer answer = answerOptional.get();
 
         QuestionDetailResponseDTO response = new QuestionDetailResponseDTO();
         response.setId(question.getId().toString());
         response.setQuestion(question.getQuestion());
         response.setType(question.getType().name());
         response.setOrder(question.getQuestionOrder());
-        response.setAnswer(answer.getAnswer());
 
         return Result.success(response);
     }
@@ -115,26 +112,38 @@ public class QuestionServiceImpl implements QuestionService {
 
         Questions question = questionOptional.get();
 
-        Questions copy = new Questions();
-        BeanUtils.copyProperties(question, copy);
+        Questions copy = question.duplicate();
 
-        copy.setId(UUID.randomUUID());
+        Questions savedQuestion = questionRepository.save(copy);
 
-        questionRepository.save(copy);
-
-        QuestionSummaryResponseDTO response = createQuestionSummaryResponseDTO(copy);
+        QuestionSummaryResponseDTO response = createQuestionSummaryResponseDTO(savedQuestion);
 
         return Result.success(response);
     }
 
-    public Result<QuestionSummaryResponseDTO> addQuestion(UUID surveyId, EditQuestionRequestDTO request) {
+    public Result<QuestionSummaryResponseDTO> addQuestion(UUID surveyId, EditQuestionRequestDTO request, Authentication authentication) {
+        Optional<Survey> surveyOptional = surveyRepository.findById(surveyId);
+
+        if(surveyOptional.isEmpty()) {
+            return Result.failure("Survey not found");
+        }
+
+        Survey survey = surveyOptional.get();
+
+        String userId = SurveyServiceImpl.getUserId(authentication);
+
+        if(!survey.getOwnerId().equals(userId)) {
+            return Result.failure("You are not owner of this Survey");
+        }
+
         Questions question = new Questions();
 
         question.setQuestion(request.getQuestion());
         question.setType(QuestionType.valueOf(request.getType()));
         question.setQuestionOrder(request.getOrder());
+        question.setSurvey(survey);
 
-        Questions savedQuestion= questionRepository.save(question);
+        Questions savedQuestion = questionRepository.save(question);
 
         QuestionSummaryResponseDTO response = createQuestionSummaryResponseDTO(savedQuestion);
 
