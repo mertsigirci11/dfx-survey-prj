@@ -130,7 +130,7 @@ public class SurveyServiceImpl implements SurveyService {
         for(Questions question : survey.getQuestions()) {
             QuestionSummaryResponseDTO questionSummaryResponseDTO = new QuestionSummaryResponseDTO();
             questionSummaryResponseDTO.setId(question.getId().toString());
-            questionSummaryResponseDTO.setText(question.getQuestion());
+            questionSummaryResponseDTO.setQuestion(question.getQuestion());
             questionSummaryResponseDTO.setType(question.getType().name());
             questionSummaryResponseDTO.setOrder(question.getOrder());
             questions.add(questionSummaryResponseDTO);
@@ -140,4 +140,5 @@ public class SurveyServiceImpl implements SurveyService {
 
         return response;
     }
+
 }
