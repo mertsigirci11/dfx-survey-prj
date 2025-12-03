@@ -4,6 +4,7 @@ import com.teamdefinex.dfxsurvey.dto.CreateSurveyRequestDTO;
 import com.teamdefinex.dfxsurvey.dto.EditSurveyRequestDTO;
 import com.teamdefinex.dfxsurvey.dto.SurveyDetailResponseDTO;
 import com.teamdefinex.dfxsurvey.dto.SurveyListResponseDTO;
+import com.teamdefinex.dfxsurvey.dto.SurveyParticipantSaveDTO;
 import com.teamdefinex.dfxsurvey.dto.result.Result;
 import org.springframework.security.core.Authentication;
 
@@ -16,5 +17,8 @@ public interface SurveyService {
     Result<SurveyDetailResponseDTO> duplicateSurvey(UUID id, Authentication authentication);
     Result<Void> sendSurvey(UUID id, Authentication authentication);
     Result<SurveyListResponseDTO> getSurveyList(int pageNumber, Authentication authentication);
+    Result<String> getParticipants(UUID id, Authentication authentication);
+    Result<Void> deleteParticipant(UUID id, String email,Authentication authentication);
+    Result<Void> addParticipant(SurveyParticipantSaveDTO dto, Authentication authentication);
     Result<SurveyDetailResponseDTO> createSurvey(CreateSurveyRequestDTO request, Authentication authentication);
 }

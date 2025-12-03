@@ -198,6 +198,69 @@ public class SurveyServiceImpl implements SurveyService {
         return Result.success(response);
     }
 
+    @Override
+    public Result<String> getParticipants(UUID id, Authentication authentication) {
+        Optional<Survey> surveyOptional = surveyRepository.findById(id);
+
+        if(surveyOptional.isEmpty()) {
+            return Result.failure("Survey not found");
+        }
+
+        Survey survey = surveyOptional.get();
+
+        String userId = getUserId(authentication);
+
+        if(!survey.getOwnerId().equals(userId)) {
+            return Result.failure("You are not owner of this Survey");
+        }
+
+        return Result.success(surveyRepository.findParticipantById(id));
+    }
+
+    @Override
+    public Result<Void> deleteParticipant(UUID id, String email, Authentication authentication) {
+        Optional<Survey> surveyOptional = surveyRepository.findById(id);
+
+        if(surveyOptional.isEmpty()) {
+            return Result.failure("Survey not found");
+        }
+
+        Survey survey = surveyOptional.get();
+
+        String userId = getUserId(authentication);
+
+        if(!survey.getOwnerId().equals(userId)) {
+            return Result.failure("You are not owner of this Survey");
+        }
+
+        var participantList = survey.getParticipants();
+        if(participantList.contains(email)) {
+            participantList.remove(email);
+            surveyRepository.save(survey);
+        }
+        return Result.success(null);
+    }
+
+    @Override
+    public Result<Void> addParticipant(SurveyParticipantSaveDTO dto, Authentication authentication) {
+        Optional<Survey> surveyOptional = surveyRepository.findById(dto.getId());
+
+        if(surveyOptional.isEmpty()) {
+            return Result.failure("Survey not found");
+        }
+
+        Survey survey = surveyOptional.get();
+
+        String userId = getUserId(authentication);
+
+        if(!survey.getOwnerId().equals(userId)) {
+            return Result.failure("You are not owner of this Survey");
+        }
+        survey.getParticipants().add(dto.getEmail());
+
+        return Result.success(null);
+    }
+
     private String getUserId(Authentication authentication) {
         return ((Jwt) Objects.requireNonNull(authentication.getPrincipal())).getSubject();
     }

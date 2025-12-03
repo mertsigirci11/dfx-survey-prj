@@ -11,4 +11,5 @@ import java.util.UUID;
 @Repository
 public interface SurveyRepository extends JpaRepository<Survey, UUID> {
     List<Survey> findAllByOwnerId(String ownerId, Pageable pageable);
+    String findParticipantById(UUID id);
 }
