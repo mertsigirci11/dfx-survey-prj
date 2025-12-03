@@ -5,13 +5,15 @@ import com.teamdefinex.dfxsurvey.application.SurveyService;
 import com.teamdefinex.dfxsurvey.data.SurveyRepository;
 import com.teamdefinex.dfxsurvey.domain.admin.Questions;
 import com.teamdefinex.dfxsurvey.domain.survey.Survey;
-import com.teamdefinex.dfxsurvey.dto.EditSurveyRequestDTO;
-import com.teamdefinex.dfxsurvey.dto.QuestionSummaryResponseDTO;
-import com.teamdefinex.dfxsurvey.dto.SurveyDetailResponseDTO;
+import com.teamdefinex.dfxsurvey.dto.*;
 import com.teamdefinex.dfxsurvey.dto.result.Result;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -116,6 +118,37 @@ public class SurveyServiceImpl implements SurveyService {
         });
 
         return Result.success(null);
+    }
+
+    @Override
+    public Result<SurveyListResponseDTO> getSurveyList(UUID id, int pageNumber, Authentication authentication) {
+        String userId = ((Jwt) Objects.requireNonNull(authentication.getPrincipal())).getSubject();
+
+        Pageable pageable = PageRequest.of(pageNumber, 10);
+
+        List<Survey> surveys = surveyRepository.findAllByOwnerId(userId, pageable);
+
+        SurveyListResponseDTO response = new SurveyListResponseDTO();
+
+        List<SurveySummaryResponseDTO> surveySummaries = surveys.
+                stream()
+                .map(this::createSurveySummaryResponseDTO)
+                .toList();
+
+        response.setSurveys(surveySummaries);
+
+        return Result.success(response);
+    }
+
+    private SurveySummaryResponseDTO createSurveySummaryResponseDTO(Survey survey) {
+        SurveySummaryResponseDTO response = new SurveySummaryResponseDTO();
+        response.setId(survey.getId().toString());
+        response.setTitle(survey.getTitle());
+        response.setExpireDate(survey.getExpiresAt());
+        response.setStatus(survey.getStatus().name());
+        response.setParticipantCount(survey.getParticipants().size());
+
+        return response;
     }
 
     private SurveyDetailResponseDTO createSurveyDetailResponseDTO(Survey survey) {
