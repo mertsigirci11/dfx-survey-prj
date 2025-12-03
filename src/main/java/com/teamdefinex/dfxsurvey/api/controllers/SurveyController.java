@@ -18,6 +18,11 @@ public class SurveyController {
 
     private final SurveyService surveyService;
 
+    @PostMapping
+    public Result<SurveyDetailResponseDTO> create(@RequestBody CreateSurveyRequestDTO request, Authentication authentication) {
+        return surveyService.createSurvey(request, authentication);
+    }
+
     @GetMapping("{surveyId}")
     public Result<SurveyDetailResponseDTO> getDetail(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
         return surveyService.getSurveyDetail(surveyId, authentication);

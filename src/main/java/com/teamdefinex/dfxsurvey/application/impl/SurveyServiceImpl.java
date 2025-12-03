@@ -2,9 +2,13 @@ package com.teamdefinex.dfxsurvey.application.impl;
 
 import com.teamdefinex.dfxsurvey.application.NotificationService;
 import com.teamdefinex.dfxsurvey.application.SurveyService;
+import com.teamdefinex.dfxsurvey.data.SurveyParticipantRepository;
 import com.teamdefinex.dfxsurvey.data.SurveyRepository;
 import com.teamdefinex.dfxsurvey.domain.admin.Questions;
 import com.teamdefinex.dfxsurvey.domain.survey.Survey;
+import com.teamdefinex.dfxsurvey.domain.survey.SurveyParticipant;
+import com.teamdefinex.dfxsurvey.domain.survey.SurveyParticipantStatus;
+import com.teamdefinex.dfxsurvey.domain.survey.SurveyStatus;
 import com.teamdefinex.dfxsurvey.dto.*;
 import com.teamdefinex.dfxsurvey.dto.result.Result;
 import jakarta.transaction.Transactional;
@@ -24,6 +28,7 @@ public class SurveyServiceImpl implements SurveyService {
 
     private final NotificationService notificationService;
     private final SurveyRepository surveyRepository;
+    private final SurveyParticipantRepository surveyParticipantRepository;
 
     @Override
     public Result<SurveyDetailResponseDTO> getSurveyDetail(UUID id, Authentication authentication) {
@@ -116,6 +121,7 @@ public class SurveyServiceImpl implements SurveyService {
         return Result.success(response);
     }
 
+    @Transactional
     @Override
     public Result<Void> sendSurvey(UUID id, Authentication authentication) {
         Optional<Survey> surveyOptional = surveyRepository.findById(id);
@@ -141,6 +147,15 @@ public class SurveyServiceImpl implements SurveyService {
             parameters.put("baseUrl", "http://localhost:8081");
 
             notificationService.send(survey.getTitle(), participant, "survey-join", parameters);
+
+            SurveyParticipant surveyParticipant = new SurveyParticipant();
+            surveyParticipant.setEmail(participant);
+            surveyParticipant.setToken(token);
+            surveyParticipant.setStatus(SurveyParticipantStatus.SENT);
+            surveyParticipant.setSurvey(survey);
+            surveyParticipant.setExpiresAt(survey.getExpiresAt());
+
+            surveyParticipantRepository.save(surveyParticipant);
         });
 
         return Result.success(null);
@@ -162,6 +177,23 @@ public class SurveyServiceImpl implements SurveyService {
                 .toList();
 
         response.setSurveys(surveySummaries);
+
+        return Result.success(response);
+    }
+
+    @Override
+    public Result<SurveyDetailResponseDTO> createSurvey(CreateSurveyRequestDTO request, Authentication authentication) {
+        String ownerId = getUserId(authentication);
+
+        Survey survey = new Survey();
+        survey.setOwnerId(ownerId);
+        survey.setStatus(SurveyStatus.CREATED);
+        survey.setTitle(request.getTitle());
+        survey.setExpiresAt(request.getValidUntil());
+
+        Survey savedSurvey = surveyRepository.save(survey);
+
+        SurveyDetailResponseDTO response = createSurveyDetailResponseDTO(savedSurvey);
 
         return Result.success(response);
     }
