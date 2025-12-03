@@ -8,4 +8,4 @@ keycloak:
 app:
   realm: master
   client-id: dfx-survey
-  client-secret: tFGibmwzsJnCwU0AtBNMnnvEEdy3ETml
+  client-secret: OBExrpOhUIvEpVQ9o2ZmaOtqNk3Pl2nV

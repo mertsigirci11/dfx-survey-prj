@@ -23,27 +23,27 @@ public class SurveyController {
         return surveyService.createSurvey(request, authentication);
     }
 
-    @GetMapping("{surveyId}")
+    @GetMapping("/{surveyId}")
     public Result<SurveyDetailResponseDTO> getDetail(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
         return surveyService.getSurveyDetail(surveyId, authentication);
     }
 
-    @PutMapping("{surveyId}")
+    @PutMapping("/{surveyId}")
     public Result<Void> edit(@PathVariable("surveyId") UUID surveyId, @RequestBody EditSurveyRequestDTO request, Authentication authentication) {
         return surveyService.editSurvey(surveyId, request, authentication);
     }
 
-    @DeleteMapping("{surveyId}")
+    @DeleteMapping("/{surveyId}")
     public Result<Void> delete(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
         return surveyService.deleteSurvey(surveyId, authentication);
     }
 
-    @PostMapping("{surveyId}/duplicate")
+    @PostMapping("/{surveyId}/duplicate")
     public Result<SurveyDetailResponseDTO> duplicate(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
         return surveyService.duplicateSurvey(surveyId, authentication);
     }
 
-    @PostMapping("{surveyId}/send")
+    @PostMapping("/{surveyId}/send")
     public Result<Void> send(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
         return surveyService.sendSurvey(surveyId, authentication);
     }
@@ -57,12 +57,17 @@ public class SurveyController {
     }
 
     @GetMapping("/participants/{surveyId}")
-    public Result<String> getParticipants(@RequestParam("surveyId") UUID surveyId, Authentication authentication) {
+    public Result<String> getParticipants(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
         return surveyService.getParticipants(surveyId, authentication);
     }
 
+    @PostMapping("/participants")
+    public Result<Void> addParticipants(@RequestBody SurveyParticipantSaveDTO request, Authentication authentication) {
+        return surveyService.addParticipant(request, authentication);
+    }
+
     @DeleteMapping("/participants/{surveyId}/{email}")
-    public Result<Void> delete(@RequestParam String email, @RequestParam UUID surveyId, Authentication authentication) {
+    public Result<Void> delete(@PathVariable("email") String email, @PathVariable("surveyId") UUID surveyId, Authentication authentication) {
         return surveyService.deleteParticipant(surveyId,email,authentication);
     }
 }

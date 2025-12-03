@@ -42,6 +42,10 @@ public class SurveyServiceImpl implements SurveyService {
 
         String userId = getUserId(authentication);
 
+        if(!survey.getOwnerId().equals(userId)) {
+            return Result.failure("You are not owner of this Survey");
+        }
+
         SurveyDetailResponseDTO response = createSurveyDetailResponseDTO(survey);
 
         return Result.success(response);
@@ -109,14 +113,11 @@ public class SurveyServiceImpl implements SurveyService {
             return Result.failure("You are not owner of this Survey");
         }
 
-        Survey copy = new Survey();
-        BeanUtils.copyProperties(survey, copy);
+        Survey copy = survey.duplicate();
 
-        copy.setId(UUID.randomUUID());
+        Survey savedSurvey =  surveyRepository.save(copy);
 
-        surveyRepository.save(copy);
-
-        SurveyDetailResponseDTO response = createSurveyDetailResponseDTO(copy);
+        SurveyDetailResponseDTO response = createSurveyDetailResponseDTO(savedSurvey);
 
         return Result.success(response);
     }
@@ -157,6 +158,10 @@ public class SurveyServiceImpl implements SurveyService {
 
             surveyParticipantRepository.save(surveyParticipant);
         });
+
+        survey.setStatus(SurveyStatus.SENT);
+
+        surveyRepository.save(survey);
 
         return Result.success(null);
     }
@@ -217,6 +222,7 @@ public class SurveyServiceImpl implements SurveyService {
         return Result.success(surveyRepository.findParticipantById(id));
     }
 
+    @Transactional
     @Override
     public Result<Void> deleteParticipant(UUID id, String email, Authentication authentication) {
         Optional<Survey> surveyOptional = surveyRepository.findById(id);
@@ -233,14 +239,17 @@ public class SurveyServiceImpl implements SurveyService {
             return Result.failure("You are not owner of this Survey");
         }
 
-        var participantList = survey.getParticipants();
+        List<String> participantList = new ArrayList<>(survey.getParticipants());
         if(participantList.contains(email)) {
             participantList.remove(email);
+            survey.setParticipants(participantList);
             surveyRepository.save(survey);
         }
+
         return Result.success(null);
     }
 
+    @Transactional
     @Override
     public Result<Void> addParticipant(SurveyParticipantSaveDTO dto, Authentication authentication) {
         Optional<Survey> surveyOptional = surveyRepository.findById(dto.getId());
@@ -256,12 +265,21 @@ public class SurveyServiceImpl implements SurveyService {
         if(!survey.getOwnerId().equals(userId)) {
             return Result.failure("You are not owner of this Survey");
         }
-        survey.getParticipants().add(dto.getEmail());
+
+        if(survey.getParticipants().contains(dto.getEmail())) {
+            return Result.failure("Already in participants");
+        }
+
+        List<String> participants = new ArrayList<>(survey.getParticipants());
+        participants.add(dto.getEmail());
+        survey.setParticipants(participants);
+
+        surveyRepository.save(survey);
 
         return Result.success(null);
     }
 
-    private String getUserId(Authentication authentication) {
+    public static String getUserId(Authentication authentication) {
         return ((Jwt) Objects.requireNonNull(authentication.getPrincipal())).getSubject();
     }
 

@@ -4,42 +4,46 @@ import com.teamdefinex.dfxsurvey.application.QuestionService;
 import com.teamdefinex.dfxsurvey.dto.*;
 import com.teamdefinex.dfxsurvey.dto.result.Result;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-@RestController("/admin/questions")
+@RestController
+@RequestMapping("/admin/questions")
 @RequiredArgsConstructor
 public class QuestionController {
 
     private final QuestionService questionService;
 
     @GetMapping("{questionId}")
-    public Result<QuestionDetailResponseDTO> getQuestionDetail(@RequestParam("questionId") UUID questionId) {
+    public Result<QuestionDetailResponseDTO> getQuestionDetail(@PathVariable("questionId") UUID questionId) {
         return questionService.getQuestionDetail(questionId);
     }
 
     @GetMapping("{questionId}/summary")
-    public Result<QuestionSummaryResponseDTO> getQuestionSummary(@RequestParam("questionId") UUID questionId) {
+    public Result<QuestionSummaryResponseDTO> getQuestionSummary(@PathVariable("questionId") UUID questionId) {
         return questionService.getQuestionSummary(questionId);
     }
 
     @PutMapping("{questionId}")
-    public Result<Void> edit(@RequestParam("questionId") UUID questionId, @RequestBody EditQuestionRequestDTO request) {
+    public Result<Void> edit(@PathVariable("questionId") UUID questionId, @RequestBody EditQuestionRequestDTO request) {
         return questionService.editQuestion(questionId, request);
     }
 
     @DeleteMapping("{questionId}")
-    public Result<Void> delete(@RequestParam("questionId") UUID questionId) {
+    public Result<Void> delete(@PathVariable("questionId") UUID questionId) {
         return questionService.deleteQuestion(questionId);
     }
 
-    @PostMapping("{questionId}")
-    public Result<QuestionSummaryResponseDTO> duplicate(@RequestParam("questionId") UUID questionId) {
+    @PostMapping("{questionId}/duplicate")
+    public Result<QuestionSummaryResponseDTO> duplicate(@PathVariable("questionId") UUID questionId) {
         return questionService.duplicateQuestion(questionId);
     }
 
     @PostMapping("{surveyId}")
-    public Result<QuestionSummaryResponseDTO> add(@RequestParam("surveyId") UUID surveyId, @RequestBody EditQuestionRequestDTO request) {
-        return questionService.addQuestion(surveyId, request);
+    public Result<QuestionSummaryResponseDTO> add(@PathVariable("surveyId") UUID surveyId,
+                                                  @RequestBody EditQuestionRequestDTO request,
+                                                  Authentication authentication) {
+        return questionService.addQuestion(surveyId, request, authentication);
     }
 }

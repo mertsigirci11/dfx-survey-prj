@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface SurveyParticipantRepository extends JpaRepository<SurveyParticipant, UUID> {
+    SurveyParticipant findByToken(String token);
 }

@@ -26,6 +26,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers(
                             "/login", "/login/**",
+                            "/refresh", "/refresh/**",
+                            "/survey/answers", "/survey/*",
                             "/v3/api-docs/**",
                             "/swagger-ui/**",
                             "/swagger-ui.html"
@@ -34,7 +36,7 @@ public class SecurityConfig {
             )
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint(customAuthenticationEntryPoint())
-                        .accessDeniedHandler(customAccessDeniedHandler()) )
+                        .accessDeniedHandler(customAccessDeniedHandler()))
             .oauth2ResourceServer(oauth2 -> oauth2
                     .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
             );

@@ -13,4 +13,5 @@ public interface AnswerRepository extends JpaRepository<Answer, UUID> {
     List<Answer> findBySurveyId(UUID surveyId);
     //List<Answer> findByQuestionId(UUID questionId);
     Optional<Answer> findByQuestionId(UUID questionId);
+    List<Answer> findByParticipantTokenAndSurveyId(String participantToken, UUID surveyId);
 }

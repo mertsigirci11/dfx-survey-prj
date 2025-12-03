@@ -25,6 +25,9 @@ public abstract class BaseEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @Version
+    private Long version = 0L;
+
     @PrePersist
     protected void onCreate() {
         LocalDateTime now = LocalDateTime.now();
