@@ -1,13 +1,10 @@
 package com.teamdefinex.dfxsurvey.domain.admin;
 
 import com.teamdefinex.dfxsurvey.domain.base.BaseEntity;
-import com.teamdefinex.dfxsurvey.domain.survey.SurveyStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 
 @Entity
 @Table(name = "questions")
