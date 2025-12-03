@@ -35,7 +35,7 @@ public class Survey extends BaseEntity {
     @Setter(AccessLevel.NONE)
     private String participants;
 
-    @OneToMany
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
     private List<Questions> questions = new ArrayList<>();
 
     @Transient

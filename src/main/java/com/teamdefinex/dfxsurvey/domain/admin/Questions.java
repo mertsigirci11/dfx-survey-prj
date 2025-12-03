@@ -1,6 +1,7 @@
 package com.teamdefinex.dfxsurvey.domain.admin;
 
 import com.teamdefinex.dfxsurvey.domain.base.BaseEntity;
+import com.teamdefinex.dfxsurvey.domain.survey.Survey;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,15 +11,14 @@ import java.time.LocalDateTime;
 @Table(name = "questions")
 @Getter
 @Setter
-
 public class Questions extends BaseEntity {
+    @ManyToOne
+    @JoinColumn(name = "survey_id")
+    private Survey survey;
 
-    private String surveyId;
     @Enumerated(EnumType.STRING)
-    @Column(name = "type")
     private QuestionType type;
     private LocalDateTime expiresAt;
     private String question;
-    private Integer order;
-
+    private Integer questionOrder;
 }
