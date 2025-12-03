@@ -50,4 +50,9 @@ public class SurveyController {
         return surveyService.sendSurvey(surveyId);
     }
 
+
+    @PostMapping("{surveyId}/answer")
+    public Result<List<AnswerDto>> saveAnswer(@RequestBody List<AnswerDto> answers){
+        return answerService.save(answers);
+    }
 }
