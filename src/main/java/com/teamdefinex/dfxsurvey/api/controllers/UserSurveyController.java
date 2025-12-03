@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/surveys")
+@RequestMapping("/survey")
 @RequiredArgsConstructor
 public class UserSurveyController {
     private final AnswerService answerService;
-    @PostMapping("~/survey{surveyId}/answer")
+    @PostMapping("/answers")
     public Result<List<AnswerDto>> saveAnswer(@RequestBody List<AnswerDto> answers){
         return answerService.save(answers);
     }
+
 }

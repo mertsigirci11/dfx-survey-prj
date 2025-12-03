@@ -55,4 +55,14 @@ public class SurveyController {
     ) {
         return surveyService.getSurveyList(pageNumber, authentication);
     }
+
+    @GetMapping("/participants/{surveyId}")
+    public Result<String> getParticipants(@RequestParam("surveyId") UUID surveyId, Authentication authentication) {
+        return surveyService.getParticipants(surveyId, authentication);
+    }
+
+    @DeleteMapping("/participants/{surveyId}/{email}")
+    public Result<Void> delete(@RequestParam String email, @RequestParam UUID surveyId, Authentication authentication) {
+        return surveyService.deleteParticipant(surveyId,email,authentication);
+    }
 }
