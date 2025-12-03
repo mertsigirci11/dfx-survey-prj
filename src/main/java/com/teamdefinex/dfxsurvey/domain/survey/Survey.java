@@ -2,6 +2,9 @@ package com.teamdefinex.dfxsurvey.domain.survey;
 
 import com.teamdefinex.dfxsurvey.domain.admin.Questions;
 import com.teamdefinex.dfxsurvey.domain.base.BaseEntity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.persistence.*;
 import lombok.*;
 
