@@ -43,7 +43,7 @@ public class QuestionServiceImpl {
         response.setId(question.getId().toString());
         response.setQuestion(question.getQuestion());
         response.setType(question.getType().name());
-        response.setOrder(question.getOrder());
+        response.setOrder(question.getQuestionOrder());
 
         return Result.success(response);
     }
@@ -63,7 +63,7 @@ public class QuestionServiceImpl {
         response.setId(question.getId().toString());
         response.setQuestion(question.getQuestion());
         response.setType(question.getType().name());
-        response.setOrder(question.getOrder());
+        response.setOrder(question.getQuestionOrder());
         response.setAnswer(answer.getAnswer());
 
         return Result.success(response);

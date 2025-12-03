@@ -227,7 +227,7 @@ public class SurveyServiceImpl implements SurveyService {
             questionSummaryResponseDTO.setId(question.getId().toString());
             questionSummaryResponseDTO.setQuestion(question.getQuestion());
             questionSummaryResponseDTO.setType(question.getType().name());
-            questionSummaryResponseDTO.setOrder(question.getOrder());
+            questionSummaryResponseDTO.setOrder(question.getQuestionOrder());
             questions.add(questionSummaryResponseDTO);
         }
 
