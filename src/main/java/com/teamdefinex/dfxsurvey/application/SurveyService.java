@@ -1,5 +1,6 @@
 package com.teamdefinex.dfxsurvey.application;
 
+import com.teamdefinex.dfxsurvey.dto.CreateSurveyRequestDTO;
 import com.teamdefinex.dfxsurvey.dto.EditSurveyRequestDTO;
 import com.teamdefinex.dfxsurvey.dto.SurveyDetailResponseDTO;
 import com.teamdefinex.dfxsurvey.dto.SurveyListResponseDTO;
@@ -15,4 +16,5 @@ public interface SurveyService {
     Result<SurveyDetailResponseDTO> duplicateSurvey(UUID id, Authentication authentication);
     Result<Void> sendSurvey(UUID id, Authentication authentication);
     Result<SurveyListResponseDTO> getSurveyList(int pageNumber, Authentication authentication);
+    Result<SurveyDetailResponseDTO> createSurvey(CreateSurveyRequestDTO request, Authentication authentication);
 }
