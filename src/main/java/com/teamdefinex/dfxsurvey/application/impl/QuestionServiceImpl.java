@@ -85,7 +85,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         if(request.getQuestion() != null) question.setQuestion(request.getQuestion());
         if(request.getType() != null) question.setType(QuestionType.valueOf(request.getType()));
-        if(request.getOrder() != null) question.setOrder(request.getOrder());
+        if(request.getOrder() != null) question.setQuestionOrder(request.getOrder());
 
         questionRepository.save(question);
 
@@ -132,8 +132,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         question.setQuestion(request.getQuestion());
         question.setType(QuestionType.valueOf(request.getType()));
-        question.setOrder(request.getOrder());
-        question.setSurveyId(String.valueOf(surveyId));
+        question.setQuestionOrder(request.getOrder());
 
         Questions savedQuestion= questionRepository.save(question);
 
@@ -148,7 +147,7 @@ public class QuestionServiceImpl implements QuestionService {
         response.setId(question.getId().toString());
         response.setQuestion(question.getQuestion());
         response.setType(question.getType().name());
-        response.setOrder(question.getOrder());
+        response.setOrder(question.getQuestionOrder());
         return response;
     }
 
