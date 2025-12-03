@@ -19,7 +19,6 @@ import java.util.UUID;
 public class SurveyController {
 
     private final SurveyService surveyService;
-    private final AnswerService answerService;
 
     @GetMapping("{surveyId}")
     public Result<SurveyDetailResponseDTO> getDetail(@RequestParam("surveyId") UUID surveyId) {
@@ -41,10 +40,7 @@ public class SurveyController {
         return surveyService.duplicateSurvey(surveyId);
     }
 
-    @PostMapping("{surveyId}/answer")
-    public Result<List<AnswerDto>> saveAnswer(@RequestBody List<AnswerDto> answers){
-        return answerService.save(answers);
-    }
+
 
     @PostMapping("{surveyId}/send")
     public Result<Void> send(@RequestParam("surveyId") UUID surveyId) {
@@ -52,8 +48,4 @@ public class SurveyController {
     }
 
 
-    @PostMapping("{surveyId}/answer")
-    public Result<List<AnswerDto>> saveAnswer(@RequestBody List<AnswerDto> answers){
-        return answerService.save(answers);
-    }
 }
