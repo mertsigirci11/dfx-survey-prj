@@ -26,7 +26,7 @@ public class SurveyServiceImpl implements SurveyService {
     private final SurveyRepository surveyRepository;
 
     @Override
-    public Result<SurveyDetailResponseDTO> getSurveyDetail(UUID id) {
+    public Result<SurveyDetailResponseDTO> getSurveyDetail(UUID id, Authentication authentication) {
         Optional<Survey> surveyOptional = surveyRepository.findById(id);
 
         if(surveyOptional.isEmpty()) {
@@ -34,6 +34,8 @@ public class SurveyServiceImpl implements SurveyService {
         }
 
         Survey survey = surveyOptional.get();
+
+        String userId = getUserId(authentication);
 
         SurveyDetailResponseDTO response = createSurveyDetailResponseDTO(survey);
 
@@ -42,7 +44,7 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Transactional
     @Override
-    public Result<Void> editSurvey(UUID id, EditSurveyRequestDTO request) {
+    public Result<Void> editSurvey(UUID id, EditSurveyRequestDTO request, Authentication authentication) {
         Optional<Survey> surveyOptional = surveyRepository.findById(id);
 
         if(surveyOptional.isEmpty()) {
@@ -50,6 +52,12 @@ public class SurveyServiceImpl implements SurveyService {
         }
 
         Survey survey = surveyOptional.get();
+
+        String userId = getUserId(authentication);
+
+        if(!survey.getOwnerId().equals(userId)) {
+            return Result.failure("You are not owner of this Survey");
+        }
 
         if(request.getTitle() != null) survey.setTitle(request.getTitle());
         if(request.getValidUntil() != null) survey.setExpiresAt(request.getValidUntil());
@@ -60,7 +68,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public Result<Void> deleteSurvey(UUID id) {
+    public Result<Void> deleteSurvey(UUID id, Authentication authentication) {
         Optional<Survey> surveyOptional = surveyRepository.findById(id);
 
         if(surveyOptional.isEmpty()) {
@@ -68,6 +76,12 @@ public class SurveyServiceImpl implements SurveyService {
         }
 
         Survey survey = surveyOptional.get();
+
+        String userId = getUserId(authentication);
+
+        if(!survey.getOwnerId().equals(userId)) {
+            return Result.failure("You are not owner of this Survey");
+        }
 
         surveyRepository.delete(survey);
 
@@ -75,7 +89,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public Result<SurveyDetailResponseDTO> duplicateSurvey(UUID id) {
+    public Result<SurveyDetailResponseDTO> duplicateSurvey(UUID id, Authentication authentication) {
         Optional<Survey> surveyOptional = surveyRepository.findById(id);
 
         if(surveyOptional.isEmpty()) {
@@ -83,6 +97,12 @@ public class SurveyServiceImpl implements SurveyService {
         }
 
         Survey survey = surveyOptional.get();
+
+        String userId = getUserId(authentication);
+
+        if(!survey.getOwnerId().equals(userId)) {
+            return Result.failure("You are not owner of this Survey");
+        }
 
         Survey copy = new Survey();
         BeanUtils.copyProperties(survey, copy);
@@ -97,7 +117,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public Result<Void> sendSurvey(UUID id) {
+    public Result<Void> sendSurvey(UUID id, Authentication authentication) {
         Optional<Survey> surveyOptional = surveyRepository.findById(id);
 
         if(surveyOptional.isEmpty()) {
@@ -105,6 +125,12 @@ public class SurveyServiceImpl implements SurveyService {
         }
 
         Survey survey = surveyOptional.get();
+
+        String userId = getUserId(authentication);
+
+        if(!survey.getOwnerId().equals(userId)) {
+            return Result.failure("You are not owner of this Survey");
+        }
 
         String token = UUID.randomUUID().toString();
 
@@ -121,8 +147,8 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public Result<SurveyListResponseDTO> getSurveyList(UUID id, int pageNumber, Authentication authentication) {
-        String userId = ((Jwt) Objects.requireNonNull(authentication.getPrincipal())).getSubject();
+    public Result<SurveyListResponseDTO> getSurveyList(int pageNumber, Authentication authentication) {
+        String userId = getUserId(authentication);
 
         Pageable pageable = PageRequest.of(pageNumber, 10);
 
@@ -138,6 +164,10 @@ public class SurveyServiceImpl implements SurveyService {
         response.setSurveys(surveySummaries);
 
         return Result.success(response);
+    }
+
+    private String getUserId(Authentication authentication) {
+        return ((Jwt) Objects.requireNonNull(authentication.getPrincipal())).getSubject();
     }
 
     private SurveySummaryResponseDTO createSurveySummaryResponseDTO(Survey survey) {

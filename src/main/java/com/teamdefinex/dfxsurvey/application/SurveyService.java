@@ -9,10 +9,10 @@ import org.springframework.security.core.Authentication;
 import java.util.UUID;
 
 public interface SurveyService {
-    Result<SurveyDetailResponseDTO> getSurveyDetail(UUID id);
-    Result<Void> editSurvey(UUID id, EditSurveyRequestDTO request);
-    Result<Void> deleteSurvey(UUID id);
-    Result<SurveyDetailResponseDTO> duplicateSurvey(UUID id);
-    Result<Void> sendSurvey(UUID id);
-    Result<SurveyListResponseDTO> getSurveyList(UUID id, int pageNumber, Authentication authentication);
+    Result<SurveyDetailResponseDTO> getSurveyDetail(UUID id, Authentication authentication);
+    Result<Void> editSurvey(UUID id, EditSurveyRequestDTO request, Authentication authentication);
+    Result<Void> deleteSurvey(UUID id, Authentication authentication);
+    Result<SurveyDetailResponseDTO> duplicateSurvey(UUID id, Authentication authentication);
+    Result<Void> sendSurvey(UUID id, Authentication authentication);
+    Result<SurveyListResponseDTO> getSurveyList(int pageNumber, Authentication authentication);
 }

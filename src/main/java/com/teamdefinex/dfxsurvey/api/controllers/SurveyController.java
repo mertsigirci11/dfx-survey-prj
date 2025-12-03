@@ -19,36 +19,35 @@ public class SurveyController {
     private final SurveyService surveyService;
 
     @GetMapping("{surveyId}")
-    public Result<SurveyDetailResponseDTO> getDetail(@PathVariable("surveyId") UUID surveyId) {
-        return surveyService.getSurveyDetail(surveyId);
+    public Result<SurveyDetailResponseDTO> getDetail(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
+        return surveyService.getSurveyDetail(surveyId, authentication);
     }
 
     @PutMapping("{surveyId}")
-    public Result<Void> edit(@PathVariable("surveyId") UUID surveyId, @RequestBody EditSurveyRequestDTO request) {
-        return surveyService.editSurvey(surveyId, request);
+    public Result<Void> edit(@PathVariable("surveyId") UUID surveyId, @RequestBody EditSurveyRequestDTO request, Authentication authentication) {
+        return surveyService.editSurvey(surveyId, request, authentication);
     }
 
     @DeleteMapping("{surveyId}")
-    public Result<Void> delete(@PathVariable("surveyId") UUID surveyId) {
-        return surveyService.deleteSurvey(surveyId);
+    public Result<Void> delete(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
+        return surveyService.deleteSurvey(surveyId, authentication);
     }
 
     @PostMapping("{surveyId}/duplicate")
-    public Result<SurveyDetailResponseDTO> duplicate(@PathVariable("surveyId") UUID surveyId) {
-        return surveyService.duplicateSurvey(surveyId);
+    public Result<SurveyDetailResponseDTO> duplicate(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
+        return surveyService.duplicateSurvey(surveyId, authentication);
     }
 
     @PostMapping("{surveyId}/send")
-    public Result<Void> send(@PathVariable("surveyId") UUID surveyId) {
-        return surveyService.sendSurvey(surveyId);
+    public Result<Void> send(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
+        return surveyService.sendSurvey(surveyId, authentication);
     }
 
-    @GetMapping("{surveyId}/summary")
+    @GetMapping("/list")
     public Result<SurveyListResponseDTO> send(
-            @PathVariable("surveyId") UUID surveyId,
             @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
             Authentication authentication
     ) {
-        return surveyService.getSurveyList(surveyId, pageNumber, authentication);
+        return surveyService.getSurveyList(pageNumber, authentication);
     }
 }
