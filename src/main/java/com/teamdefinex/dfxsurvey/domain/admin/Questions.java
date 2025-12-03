@@ -21,8 +21,6 @@ public class Questions extends BaseEntity {
     @Column(name = "type")
     private QuestionType type;
     private LocalDateTime expiresAt;
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     private String question;
     private Integer order;
 
