@@ -35,4 +35,10 @@ public class SurveyController {
     public Result<SurveyDetailResponseDTO> duplicate(@RequestParam("surveyId") UUID surveyId) {
         return surveyService.duplicateSurvey(surveyId);
     }
+
+    @PostMapping("{surveyId}")
+    public Result<Void> send(@RequestParam("surveyId") UUID surveyId) {
+        return surveyService.sendSurvey(surveyId);
+    }
+
 }
