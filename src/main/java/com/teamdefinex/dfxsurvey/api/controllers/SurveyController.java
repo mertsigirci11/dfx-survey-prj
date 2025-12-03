@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RestController("/admin/surveys")
+@RestController
+@RequestMapping("/admin/surveys")
 @RequiredArgsConstructor
 public class SurveyController {
 
@@ -35,7 +36,7 @@ public class SurveyController {
         return surveyService.deleteSurvey(surveyId);
     }
 
-    @PostMapping("{surveyId}")
+    @PostMapping("{surveyId}/duplicate")
     public Result<SurveyDetailResponseDTO> duplicate(@RequestParam("surveyId") UUID surveyId) {
         return surveyService.duplicateSurvey(surveyId);
     }
@@ -45,7 +46,7 @@ public class SurveyController {
         return answerService.save(answers);
     }
 
-    @PostMapping("{surveyId}")
+    @PostMapping("{surveyId}/send")
     public Result<Void> send(@RequestParam("surveyId") UUID surveyId) {
         return surveyService.sendSurvey(surveyId);
     }
