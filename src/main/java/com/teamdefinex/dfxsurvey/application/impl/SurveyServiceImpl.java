@@ -139,6 +139,18 @@ public class SurveyServiceImpl implements SurveyService {
             return Result.failure("You are not owner of this Survey");
         }
 
+        if(survey.getStatus() == SurveyStatus.SENT) {
+            return Result.failure("Survey already sent");
+        }
+
+        if(survey.getStatus() == SurveyStatus.COMPLETED) {
+            return Result.failure("Survey already completed");
+        }
+
+        if(survey.getStatus() == SurveyStatus.EXPIRED) {
+            return Result.failure("Survey expired");
+        }
+
         String token = UUID.randomUUID().toString();
 
         survey.getParticipants().forEach(participant -> {
@@ -309,6 +321,7 @@ public class SurveyServiceImpl implements SurveyService {
             questionSummaryResponseDTO.setQuestion(question.getQuestion());
             questionSummaryResponseDTO.setType(question.getType().name());
             questionSummaryResponseDTO.setOrder(question.getQuestionOrder());
+            questionSummaryResponseDTO.setRequired(question.getRequired());
             questions.add(questionSummaryResponseDTO);
         }
 

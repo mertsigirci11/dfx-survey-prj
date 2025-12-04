@@ -8,5 +8,5 @@ public class QuestionSummaryResponseDTO {
     private String question;
     private String type;
     private Integer order;
-
+    private Boolean required;
 }

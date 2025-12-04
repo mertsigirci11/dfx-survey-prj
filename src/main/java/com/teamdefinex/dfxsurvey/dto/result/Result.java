@@ -27,7 +27,7 @@ public class Result<T> {
         return Result.<T>builder()
                 .success(false)
                 .error(errorMessage)
-                .code("500")
+                .code("400") // internal değil business hata çünkü
                 .message("Operation failed")
                 .build();
     }

@@ -12,4 +12,5 @@ public class QuestionDetailResponseDTO {
     private String type;
     private Integer order;
     private List<String> options;
+    private Boolean required;
 }

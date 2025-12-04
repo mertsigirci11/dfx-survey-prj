@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,7 @@ public class Questions extends BaseEntity {
     private LocalDateTime expiresAt;
     private String question;
     private Integer questionOrder;
+    private Boolean required = Boolean.FALSE;
 
     @ElementCollection
     @CollectionTable(
@@ -29,7 +31,7 @@ public class Questions extends BaseEntity {
             joinColumns = @JoinColumn(name = "question_id")
     )
     @Column(name = "option_value")
-    private List<String> options;
+    private List<String> options = new ArrayList<>();
 
     public Questions duplicate() {
         Questions copy = new Questions();
@@ -39,6 +41,8 @@ public class Questions extends BaseEntity {
         copy.setExpiresAt(this.expiresAt);
         copy.setQuestion(this.question);
         copy.setQuestionOrder(this.questionOrder);
+        copy.setOptions(this.options);
+        copy.setRequired(this.required);
 
         return copy;
     }

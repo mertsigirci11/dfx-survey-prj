@@ -11,4 +11,5 @@ public class EditQuestionRequestDTO {
     private String type;
     private Integer order;
     private List<String> options;
+    private Boolean required = Boolean.FALSE;
 }
