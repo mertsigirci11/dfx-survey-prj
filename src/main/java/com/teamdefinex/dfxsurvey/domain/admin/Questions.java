@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "questions")
@@ -21,6 +22,14 @@ public class Questions extends BaseEntity {
     private LocalDateTime expiresAt;
     private String question;
     private Integer questionOrder;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "question_options",
+            joinColumns = @JoinColumn(name = "question_id")
+    )
+    @Column(name = "option_value")
+    private List<String> options;
 
     public Questions duplicate() {
         Questions copy = new Questions();

@@ -66,6 +66,7 @@ public class QuestionServiceImpl implements QuestionService {
         response.setQuestion(question.getQuestion());
         response.setType(question.getType().name());
         response.setOrder(question.getQuestionOrder());
+        response.setOptions(question.getOptions());
 
         return Result.success(response);
     }
