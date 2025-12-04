@@ -24,9 +24,9 @@ import static com.teamdefinex.dfxsurvey.application.impl.SurveyServiceImpl.getUs
 @Service
 @RequiredArgsConstructor
 public class SurveyReportServiceImpl implements SurveyReportService {
-    AnswerRepository answerRepository;
-    QuestionRepository questionRepository;
-    SurveyRepository surveyRepository;
+    private final AnswerRepository answerRepository;
+    private final QuestionRepository questionRepository;
+    private final SurveyRepository surveyRepository;
     @Override
     public Result<SurveyReportDTO> getSurveyReport(UUID surveyId, Authentication authentication) {
 
