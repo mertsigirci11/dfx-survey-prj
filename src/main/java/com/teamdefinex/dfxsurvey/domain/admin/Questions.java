@@ -23,6 +23,7 @@ public class Questions extends BaseEntity {
     private LocalDateTime expiresAt;
     private String question;
     private Integer questionOrder;
+    private Boolean required = Boolean.FALSE;
 
     @ElementCollection
     @CollectionTable(
@@ -41,6 +42,7 @@ public class Questions extends BaseEntity {
         copy.setQuestion(this.question);
         copy.setQuestionOrder(this.questionOrder);
         copy.setOptions(this.options);
+        copy.setRequired(this.required);
 
         return copy;
     }

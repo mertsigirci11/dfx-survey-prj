@@ -116,6 +116,7 @@ public class AnswerServiceImpl implements AnswerService {
             UserSurveyQuestionDTO questionDTO = new UserSurveyQuestionDTO();
             questionDTO.setQuestion(question.getQuestion());
             questionDTO.setId(question.getId().toString());
+            questionDTO.setRequired(question.getRequired());
 
             String existingAnswer = answersMap.get(question.getId());
             questionDTO.setAnswer(existingAnswer);

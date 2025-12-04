@@ -82,6 +82,7 @@ public class QuestionServiceImpl implements QuestionService {
             question.getOptions().clear();
             question.getOptions().addAll(request.getOptions());
         }
+        question.setRequired(request.getRequired());
 
         Questions savedQuestion = questionRepository.save(question);
 
@@ -180,6 +181,7 @@ public class QuestionServiceImpl implements QuestionService {
         question.setQuestionOrder(request.getOrder());
         question.setSurvey(survey);
         question.setOptions(request.getOptions());
+        question.setRequired(request.getRequired());
 
         Questions savedQuestion = questionRepository.save(question);
 
@@ -196,6 +198,7 @@ public class QuestionServiceImpl implements QuestionService {
         response.setType(question.getType().name());
         response.setOrder(question.getQuestionOrder());
         response.setOptions(question.getOptions());
+        response.setRequired(question.getRequired());
 
         return response;
     }
@@ -206,6 +209,8 @@ public class QuestionServiceImpl implements QuestionService {
         response.setQuestion(question.getQuestion());
         response.setType(question.getType().name());
         response.setOrder(question.getQuestionOrder());
+        response.setRequired(question.getRequired());
+
         return response;
     }
 

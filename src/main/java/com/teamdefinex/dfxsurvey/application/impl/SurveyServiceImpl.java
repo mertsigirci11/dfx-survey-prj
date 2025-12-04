@@ -321,6 +321,7 @@ public class SurveyServiceImpl implements SurveyService {
             questionSummaryResponseDTO.setQuestion(question.getQuestion());
             questionSummaryResponseDTO.setType(question.getType().name());
             questionSummaryResponseDTO.setOrder(question.getQuestionOrder());
+            questionSummaryResponseDTO.setRequired(question.getRequired());
             questions.add(questionSummaryResponseDTO);
         }
 
