@@ -1,8 +1,10 @@
 package com.teamdefinex.dfxsurvey.api.controllers;
 
 import com.teamdefinex.dfxsurvey.application.AnswerService;
+import com.teamdefinex.dfxsurvey.application.SurveyReportService;
 import com.teamdefinex.dfxsurvey.application.SurveyService;
 import com.teamdefinex.dfxsurvey.dto.*;
+import com.teamdefinex.dfxsurvey.dto.report.SurveyReportDTO;
 import com.teamdefinex.dfxsurvey.dto.result.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,7 @@ import java.util.UUID;
 public class SurveyController {
 
     private final SurveyService surveyService;
+    private final SurveyReportService surveyReportService;
 
     @PostMapping
     public Result<SurveyDetailResponseDTO> create(@RequestBody CreateSurveyRequestDTO request, Authentication authentication) {
@@ -69,5 +72,10 @@ public class SurveyController {
     @DeleteMapping("/participants/{surveyId}/{email}")
     public Result<Void> delete(@PathVariable("email") String email, @PathVariable("surveyId") UUID surveyId, Authentication authentication) {
         return surveyService.deleteParticipant(surveyId,email,authentication);
+    }
+
+    @GetMapping("/report/{surveyId}")
+    public Result<SurveyReportDTO> getSurveyReportDTOResult(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
+        return surveyReportService.getSurveyReport(surveyId, authentication);
     }
 }
