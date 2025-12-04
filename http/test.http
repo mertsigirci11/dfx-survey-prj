@@ -4,7 +4,16 @@
 
 ### LOGIN (get JWT + refresh token)
 # @name login
-POST http://localhost:8081/login
+POST http://192.168.1.48:8081/login
+Content-Type: application/json
+
+{
+  "email": "aburakkontas@hotmail.com",
+  "password": "admin"
+}
+
+### Register
+POST http://192.168.1.48:8081/register
 Content-Type: application/json
 
 {
@@ -14,12 +23,12 @@ Content-Type: application/json
 
 ### Token variables (auto bind)
 # The API wraps DTOs in a Result object: use `data.accessToken` and `data.refreshToken`.
-@JWT_TOKEN = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ4em1kcjlaMXoyTGdYekdzXzJDUW90RVZrbXpRNFFDTGZydmhOVEpzQUhJIn0.eyJleHAiOjE3NjQ4Mjg1MjksImlhdCI6MTc2NDgyNzYyOSwianRpIjoib25ydHJvOmVhZmI0ZmE4LWVjNTMtYTczMC1mZjMyLTQzMDVmMzlkZjc0OCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvbWFzdGVyIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjhkOWYyMzU4LTIxNGQtNDU3ZS1iNmYwLTkyNTIyZTdlNWM3OCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRmeC1zdXJ2ZXkiLCJzaWQiOiI0NjNlNDUyNC0wMTVmLTZlZmUtZjc0ZS1mNzJhN2I4MzUwNDUiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicHJlZmVycmVkX3VzZXJuYW1lIjoiYXJkYSIsImVtYWlsIjoiYWJ1cmFra29udGFzQGhvdG1haWwuY29tIn0.cfqL-_rPj0rM9RcyGDRXwt4QEf52TlPf0ssQ7miiziKtcAJ5wZgQwdQjrdweyQdVRFgBypoCwiuMUxxDabThE6znf59fnK0alpx71_10uMrqV_bAt8Zw09rD-b-Trj9LqfQ7Fp--X6lECx_fEzl2GEDMAm_KV4EVJBOvBQJYZvjzTnWaSluvmaVYmLtDJhy4OAI7rszYs28cKEPfwTg0PAqmFH9d0nMI51yR58cXrlHwzXIYp00vsXDdefasHCQVmnWRubeMBhO0k21xQ1SDoqWIL2wzvrePoozAnVFW2ax7mbOqasVdejUKEQK3DQdeypal690Xt3jtxqS0FiwFlw
+@JWT_TOKEN = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ4em1kcjlaMXoyTGdYekdzXzJDUW90RVZrbXpRNFFDTGZydmhOVEpzQUhJIn0.eyJleHAiOjE3NjQ4NTA3NzYsImlhdCI6MTc2NDg0OTg3NiwianRpIjoib25ydHJvOmFhYWRiNTNkLWQ5ZGQtNzI1OS1hZWFhLTljOGYxNjE0NzAyYSIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvbWFzdGVyIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjhkOWYyMzU4LTIxNGQtNDU3ZS1iNmYwLTkyNTIyZTdlNWM3OCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRmeC1zdXJ2ZXkiLCJzaWQiOiJmMWU3ZTk1MS0xOTcwLWNhNDctYzU1Zi05ZjkzZjVhZTFlZmYiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicHJlZmVycmVkX3VzZXJuYW1lIjoiYXJkYSIsImVtYWlsIjoiYWJ1cmFra29udGFzQGhvdG1haWwuY29tIn0.psg2O7nCx_AC5qWHI3NzrdP6CLBmYpL8d9Qto5XV7ltH7j9OdI7zOvV3duWyWdrasfZ5OXtVW6c0PGESQX2AiehlwhGxjF6AHIcQb9FYoqto4r0ycg0UprCjHYvD-K9LyMOM4eQNi8cDqUlkI-3BcaUREjIyXSya30R8Zws3ivb6a8lRmT9aie24tbDsx2gr8k8f2YJKbi8WVkfevAuKoWzb3TeTiIrSyTwYmC-PmFK9NebcasVYLoM4O3OcnLJ2eA0zs6GVqHuuiEyF0I9TCQEuGRsJvLURwOE9Gtdm9PPgSAVFYMU95slMUebZz5kxwLWz13JMq4Tum4eW4CEQ_g
 @REFRESH_TOKEN = eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI2YzQ5ZTU5OC1kYWFiLTQwM2QtOGFiOC04NTI4OTA2YmViOGYifQ.eyJleHAiOjE3NjQ3ODkyMjksImlhdCI6MTc2NDc4NzQyOSwianRpIjoiNWZhZDA1MGYtZmZjMi1kMTk1LTQwMzEtNDRkNjU5NTM3Njg5IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL21hc3RlciIsInN1YiI6IjhkOWYyMzU4LTIxNGQtNDU3ZS1iNmYwLTkyNTIyZTdlNWM3OCIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJkZngtc3VydmV5Iiwic2lkIjoiOTRjNDg4NjMtMjhiOC0wOWMwLTFmZTYtOWZiOTBkYmUzOTA3Iiwic2NvcGUiOiJyb2xlcyBlbWFpbCBhY3IgcHJvZmlsZSB3ZWItb3JpZ2lucyBiYXNpYyJ9.qynm-TUTjX8SKvprih2yqK4afdhhmf5IoH24NEouo76rWgYU9PbyIuwTZtS_qSfaE1a3YjpKoSABdbhQViebCw
 
 ### REFRESH TOKEN
 # Token yenileme testi
-POST http://localhost:8081/refresh?token={{REFRESH_TOKEN}}
+POST http://192.168.1.48:8081/refresh?token={{REFRESH_TOKEN}}
 
 #######################################################################
 # QUESTION CONTROLLER
@@ -27,19 +36,19 @@ POST http://localhost:8081/refresh?token={{REFRESH_TOKEN}}
 
 @SURVEY_ID = f75bf9f4-8482-4ba0-89c3-780d96c231fa
 @SURVEY_ID2 = a3c231d2-f456-4f37-ae6e-442944abdeb6
-@questionId = 18d3c9aa-b4a5-4fe3-ac19-069b1d7d3da7
+@questionId = 09eb5ae7-516e-450a-b044-b9df37c2da2a
 @questionId2 = 65dac648-84d3-47e4-b584-1763daf4e4ab
 
 ### Get question detail
-GET http://localhost:8081/admin/questions/{{questionId}}
+GET http://192.168.1.48:8081/admin/questions/{{questionId}}
 Authorization: Bearer {{JWT_TOKEN}}
 
 ### Get question summary
-GET http://localhost:8081/admin/questions/{{questionId}}/summary
+GET http://192.168.1.48:8081/admin/questions/{{questionId}}/summary
 Authorization: Bearer {{JWT_TOKEN}}
 
 ### Edit question
-PUT http://localhost:8081/admin/questions/{{questionId}}
+PUT http://192.168.1.48:8081/admin/questions/{{questionId}}
 Content-Type: application/json
 Authorization: Bearer {{JWT_TOKEN}}
 
@@ -51,16 +60,16 @@ Authorization: Bearer {{JWT_TOKEN}}
 }
 
 ### Delete question
-DELETE http://localhost:8081/admin/questions/{{questionId}}
+DELETE http://192.168.1.48:8081/admin/questions/{{questionId}}
 Authorization: Bearer {{JWT_TOKEN}}
 
 ### Duplicate question
-POST http://localhost:8081/admin/questions/{{questionId}}/duplicate
+POST http://192.168.1.48:8081/admin/questions/{{questionId}}/duplicate
 Authorization: Bearer {{JWT_TOKEN}}
 
 ### Add question to survey
 # @name addQuestion
-POST http://localhost:8081/admin/questions/{{SURVEY_ID}}
+POST http://192.168.1.48:8081/admin/questions/{{SURVEY_ID}}
 Content-Type: application/json
 Authorization: Bearer {{JWT_TOKEN}}
 
@@ -77,7 +86,7 @@ Authorization: Bearer {{JWT_TOKEN}}
 
 ### Create survey
 # @name createSurvey
-POST http://localhost:8081/admin/surveys
+POST http://192.168.1.48:8081/admin/surveys
 Content-Type: application/json
 Authorization: Bearer {{JWT_TOKEN}}
 
@@ -87,11 +96,11 @@ Authorization: Bearer {{JWT_TOKEN}}
 }
 
 ### Get survey detail
-GET http://localhost:8081/admin/surveys/{{SURVEY_ID}}
+GET http://192.168.1.48:8081/admin/surveys/{{SURVEY_ID}}
 Authorization: Bearer {{JWT_TOKEN}}
 
 ### Edit survey
-PUT http://localhost:8081/admin/surveys/{{SURVEY_ID}}
+PUT http://192.168.1.48:8081/admin/surveys/{{SURVEY_ID}}
 Content-Type: application/json
 Authorization: Bearer {{JWT_TOKEN}}
 
@@ -101,15 +110,15 @@ Authorization: Bearer {{JWT_TOKEN}}
 }
 
 ### Delete survey
-DELETE http://localhost:8081/admin/surveys/{{SURVEY_ID}}
+DELETE http://192.168.1.48:8081/admin/surveys/{{SURVEY_ID}}
 Authorization: Bearer {{JWT_TOKEN}}
 
 ### Duplicate survey
-POST http://localhost:8081/admin/surveys/{{SURVEY_ID}}/duplicate
+POST http://192.168.1.48:8081/admin/surveys/{{SURVEY_ID}}/duplicate
 Authorization: Bearer {{JWT_TOKEN}}
 
 ### Send survey
-POST http://localhost:8081/admin/surveys/{{SURVEY_ID}}/send
+POST http://192.168.1.48:8081/admin/surveys/{{SURVEY_ID}}/send
 Authorization: Bearer {{JWT_TOKEN}}
 
 ### If `send` returns a participant token or a participant list, bind token here (optional)
@@ -118,15 +127,15 @@ Authorization: Bearer {{JWT_TOKEN}}
 @participantEmail2 = burakkontass@gmail.com
 
 ### Get survey list (paged)
-GET http://localhost:8081/admin/surveys/list?pageNumber=0
+GET http://192.168.1.48:8081/admin/surveys/list?pageNumber=0
 Authorization: Bearer {{JWT_TOKEN}}
 
 ### Get participants of survey
-GET http://localhost:8081/admin/surveys/participants/{{SURVEY_ID}}
+GET http://192.168.1.48:8081/admin/surveys/participants/{{SURVEY_ID}}
 Authorization: Bearer {{JWT_TOKEN}}
 
 ### Add participant to survey
-POST http://localhost:8081/admin/surveys/participants
+POST http://192.168.1.48:8081/admin/surveys/participants
 Authorization: Bearer {{JWT_TOKEN}}
 Content-Type: application/json
 
@@ -136,7 +145,7 @@ Content-Type: application/json
 }
 
 ### Delete participant
-DELETE http://localhost:8081/admin/surveys/participants/{{SURVEY_ID}}/{{participantEmail}}
+DELETE http://192.168.1.48:8081/admin/surveys/participants/{{SURVEY_ID}}/{{participantEmail}}
 Authorization: Bearer {{JWT_TOKEN}}
 
 
@@ -145,10 +154,10 @@ Authorization: Bearer {{JWT_TOKEN}}
 #######################################################################
 
 ### Get participants of survey
-GET http://localhost:8081/survey/{{participantToken}}
+GET http://192.168.1.48:8081/survey/{{participantToken}}
 
 ### Save User Answers
-POST http://localhost:8081/survey/answers
+POST http://192.168.1.48:8081/survey/answers
 Content-Type: application/json
 
 [

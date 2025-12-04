@@ -25,4 +25,9 @@ public class AuthController {
     Result<LoginResponseDTO> refresh(@RequestParam("token") String refreshToken) {
         return authService.refresh(refreshToken);
     }
+
+    @PostMapping("/register")
+    Object refresh(@RequestBody LoginRequestDTO request) {
+        return authService.register(request.getEmail(), request.getPassword());
+    }
 }
