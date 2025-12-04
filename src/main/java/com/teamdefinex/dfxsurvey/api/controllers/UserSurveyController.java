@@ -25,4 +25,9 @@ public class UserSurveyController {
         return answerService.getSurvey(token);
     }
 
+    @PostMapping("/{participantToken}/complete")
+    public Result<Void> completeSurvey(@PathVariable("participantToken") String token){
+        return answerService.completeSurvey(token);
+    }
+
 }
