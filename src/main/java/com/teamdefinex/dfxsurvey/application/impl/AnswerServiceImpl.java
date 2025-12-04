@@ -119,6 +119,8 @@ public class AnswerServiceImpl implements AnswerService {
             String existingAnswer = answersMap.get(question.getId());
             questionDTO.setAnswer(existingAnswer);
 
+            questionDTO.setOptions(question.getOptions());
+
             questionDTOs.add(questionDTO);
         });
 
