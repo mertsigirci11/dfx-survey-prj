@@ -34,6 +34,7 @@ public class SecurityConfig {
                             "/refresh", "/refresh/**",
                             "/survey/answers", "/survey/*",
                             "/survey/**",
+                            "/admin/questions/**",
                             "/v3/api-docs/**",
                             "/swagger-ui/**",
                             "/swagger-ui.html"

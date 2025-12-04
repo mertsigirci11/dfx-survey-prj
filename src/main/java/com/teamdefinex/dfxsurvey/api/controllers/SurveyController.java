@@ -6,6 +6,7 @@ import com.teamdefinex.dfxsurvey.application.SurveyService;
 import com.teamdefinex.dfxsurvey.dto.*;
 import com.teamdefinex.dfxsurvey.dto.report.SurveyReportDTO;
 import com.teamdefinex.dfxsurvey.dto.result.Result;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -47,8 +48,8 @@ public class SurveyController {
     }
 
     @PostMapping("/{surveyId}/send")
-    public Result<Void> send(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
-        return surveyService.sendSurvey(surveyId, authentication);
+    public Result<Void> send(@PathVariable("surveyId") UUID surveyId, Authentication authentication, HttpServletRequest request) {
+        return surveyService.sendSurvey(surveyId, authentication, request);
     }
 
     @GetMapping("/list")

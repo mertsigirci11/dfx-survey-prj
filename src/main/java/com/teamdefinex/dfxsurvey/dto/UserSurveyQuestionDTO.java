@@ -11,4 +11,5 @@ public class UserSurveyQuestionDTO {
     private String answer;
     private List<String> options;
     private Boolean required;
+    private String type;
 }

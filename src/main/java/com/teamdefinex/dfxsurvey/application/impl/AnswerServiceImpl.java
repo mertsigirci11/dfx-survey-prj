@@ -117,6 +117,7 @@ public class AnswerServiceImpl implements AnswerService {
                 .findByParticipantTokenAndSurveyId(participantToken, survey.getId());
 
         Map<UUID, String> answersMap = existingAnswers.stream()
+                .filter(a -> a.getAnswer() != null)
                 .collect(Collectors.toMap(Answer::getQuestionId, Answer::getAnswer));
 
         UserSurveyDTO userSurveyDTO = new UserSurveyDTO();
@@ -127,6 +128,7 @@ public class AnswerServiceImpl implements AnswerService {
             questionDTO.setQuestion(question.getQuestion());
             questionDTO.setId(question.getId().toString());
             questionDTO.setRequired(question.getRequired());
+            questionDTO.setType(question.getType().name());
 
             String existingAnswer = answersMap.get(question.getId());
             questionDTO.setAnswer(existingAnswer);
