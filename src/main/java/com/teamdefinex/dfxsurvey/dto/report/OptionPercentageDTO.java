@@ -2,6 +2,8 @@ package com.teamdefinex.dfxsurvey.dto.report;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor

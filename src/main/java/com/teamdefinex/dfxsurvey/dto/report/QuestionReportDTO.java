@@ -15,6 +15,7 @@ public class QuestionReportDTO {
     private String questionText;
     private String type;
     private int totalAnswers;
+    private List<String> answers;
 
     private List<OptionPercentageDTO> optionPercentages;
 }
