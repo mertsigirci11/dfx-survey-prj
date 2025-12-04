@@ -11,6 +11,7 @@ import com.teamdefinex.dfxsurvey.domain.survey.SurveyParticipantStatus;
 import com.teamdefinex.dfxsurvey.domain.survey.SurveyStatus;
 import com.teamdefinex.dfxsurvey.dto.*;
 import com.teamdefinex.dfxsurvey.dto.result.Result;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -125,7 +126,7 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Transactional
     @Override
-    public Result<Void> sendSurvey(UUID id, Authentication authentication) {
+    public Result<Void> sendSurvey(UUID id, Authentication authentication, HttpServletRequest request) {
         Optional<Survey> surveyOptional = surveyRepository.findById(id);
 
         if(surveyOptional.isEmpty()) {
@@ -152,13 +153,19 @@ public class SurveyServiceImpl implements SurveyService {
             return Result.failure("Survey expired");
         }
 
-        String token = UUID.randomUUID().toString();
+        String baseUrl = request.getHeader("Origin");
+        if(baseUrl == null) {
+            baseUrl = "http://localhost:5173"; // fallback
+        }
 
+        String finalBaseUrl = baseUrl;
         survey.getParticipants().forEach(participant -> {
+            String token = UUID.randomUUID().toString();
+
             Dictionary<String, String> parameters = new Hashtable<>();
             parameters.put("token", token);
             parameters.put("title", survey.getTitle());
-            parameters.put("baseUrl", "http://localhost:8081");
+            parameters.put("baseUrl", finalBaseUrl);
 
             notificationService.send(survey.getTitle(), participant, "survey-join", parameters);
 
