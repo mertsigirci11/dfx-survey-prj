@@ -14,7 +14,7 @@ Content-Type: application/json
 
 ### Token variables (auto bind)
 # The API wraps DTOs in a Result object: use `data.accessToken` and `data.refreshToken`.
-@JWT_TOKEN = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ4em1kcjlaMXoyTGdYekdzXzJDUW90RVZrbXpRNFFDTGZydmhOVEpzQUhJIn0.eyJleHAiOjE3NjQ3ODk0MTksImlhdCI6MTc2NDc4ODUxOSwianRpIjoib25ydHJ0Ojk2MTBhMTY0LTUyNmQtOGE2Yy05NmMxLThhNWJmMTM0YTc3MCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvbWFzdGVyIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjhkOWYyMzU4LTIxNGQtNDU3ZS1iNmYwLTkyNTIyZTdlNWM3OCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRmeC1zdXJ2ZXkiLCJzaWQiOiI5NGM0ODg2My0yOGI4LTA5YzAtMWZlNi05ZmI5MGRiZTM5MDciLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicHJlZmVycmVkX3VzZXJuYW1lIjoiYXJkYSIsImVtYWlsIjoiYWJ1cmFra29udGFzQGhvdG1haWwuY29tIn0.oJw8uMmFw-51BVeL_ay3sNBJRl5PQpMUmh33yqxNnwBnpVID4Ug5cTsgErZXw8FMM1eP5v0tyRl5LQCQTIBSg9NJvnQdXEj3255C_BnNl7QPKqF0AgAgi0lmpslYWD0TMkhrB8YKBQHXeyunpodayNzuBhZks40XS-tu2Jd2t7SNIX2QoEXmdXjzjwYJD0M0PKQOtfB39XuY_l4Ui77Gky9Ckzi28P4KVIVZProztAoRjybqtUlZxYlBbSJCh54kwpz6uYx7VOS-GNgHQ5wQ80FtJiP7lnGhl04NOw_Y6aE0uj8qbxQ7nZEnyC4uxJRzsnO8Bsb0iDVzckXB--l8Kw
+@JWT_TOKEN = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ4em1kcjlaMXoyTGdYekdzXzJDUW90RVZrbXpRNFFDTGZydmhOVEpzQUhJIn0.eyJleHAiOjE3NjQ4Mjg1MjksImlhdCI6MTc2NDgyNzYyOSwianRpIjoib25ydHJvOmVhZmI0ZmE4LWVjNTMtYTczMC1mZjMyLTQzMDVmMzlkZjc0OCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvbWFzdGVyIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjhkOWYyMzU4LTIxNGQtNDU3ZS1iNmYwLTkyNTIyZTdlNWM3OCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRmeC1zdXJ2ZXkiLCJzaWQiOiI0NjNlNDUyNC0wMTVmLTZlZmUtZjc0ZS1mNzJhN2I4MzUwNDUiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicHJlZmVycmVkX3VzZXJuYW1lIjoiYXJkYSIsImVtYWlsIjoiYWJ1cmFra29udGFzQGhvdG1haWwuY29tIn0.cfqL-_rPj0rM9RcyGDRXwt4QEf52TlPf0ssQ7miiziKtcAJ5wZgQwdQjrdweyQdVRFgBypoCwiuMUxxDabThE6znf59fnK0alpx71_10uMrqV_bAt8Zw09rD-b-Trj9LqfQ7Fp--X6lECx_fEzl2GEDMAm_KV4EVJBOvBQJYZvjzTnWaSluvmaVYmLtDJhy4OAI7rszYs28cKEPfwTg0PAqmFH9d0nMI51yR58cXrlHwzXIYp00vsXDdefasHCQVmnWRubeMBhO0k21xQ1SDoqWIL2wzvrePoozAnVFW2ax7mbOqasVdejUKEQK3DQdeypal690Xt3jtxqS0FiwFlw
 @REFRESH_TOKEN = eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI2YzQ5ZTU5OC1kYWFiLTQwM2QtOGFiOC04NTI4OTA2YmViOGYifQ.eyJleHAiOjE3NjQ3ODkyMjksImlhdCI6MTc2NDc4NzQyOSwianRpIjoiNWZhZDA1MGYtZmZjMi1kMTk1LTQwMzEtNDRkNjU5NTM3Njg5IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL21hc3RlciIsInN1YiI6IjhkOWYyMzU4LTIxNGQtNDU3ZS1iNmYwLTkyNTIyZTdlNWM3OCIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJkZngtc3VydmV5Iiwic2lkIjoiOTRjNDg4NjMtMjhiOC0wOWMwLTFmZTYtOWZiOTBkYmUzOTA3Iiwic2NvcGUiOiJyb2xlcyBlbWFpbCBhY3IgcHJvZmlsZSB3ZWItb3JpZ2lucyBiYXNpYyJ9.qynm-TUTjX8SKvprih2yqK4afdhhmf5IoH24NEouo76rWgYU9PbyIuwTZtS_qSfaE1a3YjpKoSABdbhQViebCw
 
 ### REFRESH TOKEN
@@ -27,7 +27,7 @@ POST http://localhost:8081/refresh?token={{REFRESH_TOKEN}}
 
 @SURVEY_ID = f75bf9f4-8482-4ba0-89c3-780d96c231fa
 @SURVEY_ID2 = a3c231d2-f456-4f37-ae6e-442944abdeb6
-@questionId = 2acfd047-a259-41af-9825-2471215c9ddd
+@questionId = 18d3c9aa-b4a5-4fe3-ac19-069b1d7d3da7
 @questionId2 = 65dac648-84d3-47e4-b584-1763daf4e4ab
 
 ### Get question detail
@@ -46,7 +46,8 @@ Authorization: Bearer {{JWT_TOKEN}}
 {
   "question": "Updated question text",
   "type": "LIKERT",
-  "order": 2
+  "order": 2,
+  "options": ["Strongly Dislike", "Dislike", "Neutral", "Like", "Strongly Like"]
 }
 
 ### Delete question
@@ -66,7 +67,8 @@ Authorization: Bearer {{JWT_TOKEN}}
 {
   "question": "New question for survey",
   "type": "FREETEXT",
-  "order": 1
+  "order": 2,
+  "options": ["What is your favorite animal ?"]
 }
 
 #######################################################################
@@ -155,15 +157,9 @@ Content-Type: application/json
     "surveyId": "{{SURVEY_ID}}",
     "questionId": "{{questionId}}",
     "answer": "A"
-  },
-    {
-    "participantToken": "{{participantToken}}",
-    "surveyId": "{{SURVEY_ID}}",
-    "questionId": "{{questionId2}}",
-    "answer": "C"
   }
 ]
 
 ### NOTE: If you don't have a participant token, set it manually here:
-@participantToken = f6e0ea18-b5fd-4238-bdb1-1b25a8427f7e
+@participantToken = 78268554-f256-46ae-aacf-35ca135a297e
 

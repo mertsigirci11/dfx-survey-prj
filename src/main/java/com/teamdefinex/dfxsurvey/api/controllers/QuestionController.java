@@ -26,7 +26,7 @@ public class QuestionController {
     }
 
     @PutMapping("{questionId}")
-    public Result<Void> edit(@PathVariable("questionId") UUID questionId, @RequestBody EditQuestionRequestDTO request) {
+    public Result<QuestionDetailResponseDTO> edit(@PathVariable("questionId") UUID questionId, @RequestBody EditQuestionRequestDTO request) {
         return questionService.editQuestion(questionId, request);
     }
 
@@ -36,12 +36,12 @@ public class QuestionController {
     }
 
     @PostMapping("{questionId}/duplicate")
-    public Result<QuestionSummaryResponseDTO> duplicate(@PathVariable("questionId") UUID questionId) {
+    public Result<QuestionDetailResponseDTO> duplicate(@PathVariable("questionId") UUID questionId) {
         return questionService.duplicateQuestion(questionId);
     }
 
     @PostMapping("{surveyId}")
-    public Result<QuestionSummaryResponseDTO> add(@PathVariable("surveyId") UUID surveyId,
+    public Result<QuestionDetailResponseDTO> add(@PathVariable("surveyId") UUID surveyId,
                                                   @RequestBody EditQuestionRequestDTO request,
                                                   Authentication authentication) {
         return questionService.addQuestion(surveyId, request, authentication);
