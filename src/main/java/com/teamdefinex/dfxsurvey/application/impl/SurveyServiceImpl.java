@@ -14,6 +14,7 @@ import com.teamdefinex.dfxsurvey.dto.result.Result;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -184,19 +185,22 @@ public class SurveyServiceImpl implements SurveyService {
 
         Pageable pageable = PageRequest.of(pageNumber, 10);
 
-        List<Survey> surveys = surveyRepository.findAllByOwnerId(userId, pageable);
+        Page<Survey> surveys = surveyRepository.findAllByOwnerId(userId, pageable);
 
         SurveyListResponseDTO response = new SurveyListResponseDTO();
 
-        List<SurveySummaryResponseDTO> surveySummaries = surveys.
-                stream()
+        List<SurveySummaryResponseDTO> surveySummaries = surveys
+                .stream()
                 .map(this::createSurveySummaryResponseDTO)
                 .toList();
 
         response.setSurveys(surveySummaries);
+        response.setTotalPages(surveys.getTotalPages());
+        response.setTotalElements(surveys.getTotalElements());
 
         return Result.success(response);
     }
+
 
     @Override
     public Result<SurveyDetailResponseDTO> createSurvey(CreateSurveyRequestDTO request, Authentication authentication) {
@@ -216,7 +220,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public Result<String> getParticipants(UUID id, Authentication authentication) {
+    public Result<List<String>> getParticipants(UUID id, Authentication authentication) {
         Optional<Survey> surveyOptional = surveyRepository.findById(id);
 
         if(surveyOptional.isEmpty()) {
@@ -231,7 +235,7 @@ public class SurveyServiceImpl implements SurveyService {
             return Result.failure("You are not owner of this Survey");
         }
 
-        return Result.success(surveyRepository.findParticipantById(id));
+        return Result.success(survey.getParticipants());
     }
 
     @Transactional
@@ -312,6 +316,7 @@ public class SurveyServiceImpl implements SurveyService {
         response.setTitle(survey.getTitle());
         response.setStatus(survey.getStatus().name());
         response.setValidUntil(survey.getExpiresAt());
+        response.setParticipantCount(survey.getParticipants().size());
 
         List<QuestionSummaryResponseDTO> questions = new ArrayList<>();
 

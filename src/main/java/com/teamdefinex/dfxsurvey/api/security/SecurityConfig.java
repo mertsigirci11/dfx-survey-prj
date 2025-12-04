@@ -13,6 +13,9 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +30,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers(
                             "/login", "/login/**",
+                            "/register", "/register/**",
                             "/refresh", "/refresh/**",
                             "/survey/answers", "/survey/*",
                             "/v3/api-docs/**",
@@ -64,6 +68,21 @@ public class SecurityConfig {
             Result<Object> result = Result.failure("403", "Forbidden", accessDeniedException.getMessage());
             response.getWriter().write(objectMapper.writeValueAsString(result));
         };
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowCredentials(true);
+        config.addAllowedOriginPattern("*"); // Tüm originler
+        config.addAllowedHeader("*");        // Tüm headerlar
+        config.addAllowedMethod("*");        // GET, POST, PUT, DELETE...
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+
+        return source;
     }
 
     private JwtAuthenticationConverter jwtAuthenticationConverter() {

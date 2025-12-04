@@ -11,5 +11,6 @@ public class SurveyDetailResponseDTO {
     private String title;
     private String status;
     private LocalDateTime validUntil;
+    private Integer participantCount;
     private List<QuestionSummaryResponseDTO> questions;
 }

@@ -57,7 +57,7 @@ public class SurveyController {
     }
 
     @GetMapping("/participants/{surveyId}")
-    public Result<String> getParticipants(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
+    public Result<List<String>> getParticipants(@PathVariable("surveyId") UUID surveyId, Authentication authentication) {
         return surveyService.getParticipants(surveyId, authentication);
     }
 

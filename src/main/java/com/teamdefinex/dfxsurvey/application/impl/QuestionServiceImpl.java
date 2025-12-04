@@ -139,6 +139,9 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         Questions copy = question.duplicate();
+        int newOrder = questionRepository.findMaxOrderBySurveyId(copy.getSurvey().getId()) + 1;
+
+        copy.setQuestionOrder(newOrder);
 
         Questions savedQuestion = questionRepository.save(copy);
 

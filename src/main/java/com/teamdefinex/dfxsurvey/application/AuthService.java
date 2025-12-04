@@ -6,4 +6,5 @@ import com.teamdefinex.dfxsurvey.dto.result.Result;
 public interface AuthService {
     Result<LoginResponseDTO> login(String username, String password);
     Result<LoginResponseDTO> refresh(String refreshToken);
+    Object register(String email, String password);
 }
