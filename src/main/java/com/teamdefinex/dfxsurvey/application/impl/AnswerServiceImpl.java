@@ -11,6 +11,7 @@ import com.teamdefinex.dfxsurvey.dto.UserSurveyDTO;
 import com.teamdefinex.dfxsurvey.dto.UserSurveyQuestionDTO;
 import com.teamdefinex.dfxsurvey.dto.result.Result;
 import com.teamdefinex.dfxsurvey.mapper.AnswerMapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +33,16 @@ public class AnswerServiceImpl implements AnswerService {
         }
 
         String participantToken = answers.getFirst().getParticipantToken();
-        UUID surveyId = answers.getFirst().getSurveyId();
 
-        SurveyStatus surveyStatus = surveyRepository.findStatusById(surveyId);
+        SurveyParticipant participant = surveyParticipantRepository.findByToken(participantToken);
+
+        if(participant == null) {
+            return Result.failure("Participant not found");
+        }
+
+        UUID surveyId = participant.getSurvey().getId();
+
+        SurveyStatus surveyStatus = participant.getSurvey().getStatus();
 
         if(surveyStatus == SurveyStatus.CREATED) {
             return Result.failure("Survey not found");
@@ -64,6 +72,8 @@ public class AnswerServiceImpl implements AnswerService {
             } else {
                 answer = answerMapper.toEntity(answerDto);
             }
+
+            answer.setSurveyId(surveyId);
 
             answersToSave.add(answer);
         }
@@ -129,5 +139,29 @@ public class AnswerServiceImpl implements AnswerService {
         userSurveyDTO.setQuestions(questionDTOs);
 
         return Result.success(userSurveyDTO);
+    }
+
+    @Transactional
+    @Override
+    public Result<Void> completeSurvey(String participantToken) {
+        SurveyParticipant surveyParticipant = surveyParticipantRepository.findByToken(participantToken);
+
+        if(surveyParticipant == null) {
+            return Result.failure("No survey found");
+        }
+
+        if(surveyParticipant.getStatus() == SurveyParticipantStatus.EXPIRED) {
+            return Result.failure("Survey expired");
+        }
+
+        if(surveyParticipant.getStatus() == SurveyParticipantStatus.COMPLETED) {
+            return Result.failure("You already completed this survey");
+        }
+
+        surveyParticipant.setStatus(SurveyParticipantStatus.COMPLETED);
+
+        surveyParticipantRepository.save(surveyParticipant);
+
+        return Result.success(null);
     }
 }

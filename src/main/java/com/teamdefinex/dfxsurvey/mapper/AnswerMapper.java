@@ -13,7 +13,6 @@ public class AnswerMapper {
         AnswerDto answerDto = new AnswerDto();
 
         answerDto.setAnswer(answer.getAnswer());
-        answerDto.setSurveyId(answer.getSurveyId());
         answerDto.setQuestionId(answer.getQuestionId());
         answerDto.setParticipantToken(answer.getParticipantToken());
 
@@ -24,7 +23,6 @@ public class AnswerMapper {
         Answer answer = new Answer();
 
         answer.setAnswer(answerDto.getAnswer());
-        answer.setSurveyId(answerDto.getSurveyId());
         answer.setQuestionId(answerDto.getQuestionId());
         answer.setParticipantToken(answerDto.getParticipantToken());
 

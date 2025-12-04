@@ -10,4 +10,5 @@ import java.util.List;
 public interface AnswerService {
     Result<List<AnswerDto>> save(List<AnswerDto> answer);
     Result<UserSurveyDTO> getSurvey(String participantToken);
+    Result<Void> completeSurvey(String participantToken);
 }

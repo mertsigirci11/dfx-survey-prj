@@ -9,7 +9,6 @@ import java.util.UUID;
 @Setter
 public class AnswerDto {
     private String participantToken;
-    private UUID surveyId;
     private UUID questionId;
     private String answer;
 }
